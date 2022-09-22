@@ -13,8 +13,6 @@ public class RestClient {
                 .addFilter(new ResponseLoggingFilter())
                 .addFilter(new RequestLoggingFilter())
                 .build();
-
-
     }
 }
 

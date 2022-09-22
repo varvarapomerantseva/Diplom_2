@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class UserCreateTest {
     private User user;
     private UserClient userClient;
- private String userToken;
+    private String userToken;
     private String accessToken;
 
     @Before
@@ -33,10 +33,8 @@ public class UserCreateTest {
         boolean isCreated = response.extract().path("success");
         accessToken = response.extract().path("accessToken");
         userToken = accessToken.substring(7);
-
         assertEquals("Status code is incorrect", SC_OK, statusCode);
         assertTrue("User is not created", isCreated);
-
     }
 
     @Test
@@ -51,7 +49,6 @@ public class UserCreateTest {
         String messageExpected = "User already exists";
         assertEquals("Status code is incorrect", SC_FORBIDDEN, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
 
     @Test
@@ -65,8 +62,8 @@ public class UserCreateTest {
         String messageExpected = "Email, password and name are required fields";
         assertEquals("Status code is incorrect", SC_FORBIDDEN, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
+
     @Test
     @DisplayName("User is not created without password")
     public void userIsNotCreatedWithoutLoginTest() {
@@ -77,8 +74,8 @@ public class UserCreateTest {
         String messageExpected = "Email, password and name are required fields";
         assertEquals("Status code is incorrect", SC_FORBIDDEN, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
+
     @Test
     @DisplayName("User is not created without name")
     public void userIsNotCreatedWithoutNameTest() {
@@ -89,7 +86,5 @@ public class UserCreateTest {
         String messageExpected = "Email, password and name are required fields";
         assertEquals("Status code is incorrect", SC_FORBIDDEN, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
-
 }

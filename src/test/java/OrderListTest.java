@@ -10,39 +10,38 @@ import static org.junit.Assert.*;
 
 public class OrderListTest {
 
-        private OrderClient orderClient;
+    private OrderClient orderClient;
 
-        private User user;
-        private UserClient userClient;
-        private String userToken;
-        private String accessToken;
+    private User user;
+    private UserClient userClient;
+    private String userToken;
+    private String accessToken;
 
-        @Before
-        public void setUp() {
-            orderClient = new OrderClient();
-            user = UserGenerator.getDefault();
-            userClient = new UserClient();
-        }
+    @Before
+    public void setUp() {
+        orderClient = new OrderClient();
+        user = UserGenerator.getDefault();
+        userClient = new UserClient();
+    }
 
-        @After
-        public void tearDown() {
-            userClient.deleteUser(userToken);
-        }
+    @After
+    public void tearDown() {
+        userClient.deleteUser(userToken);
+    }
 
-        @Test
-        @DisplayName("Authorization user can get order list")
-        public void GetOrderListAuthUser() {
-            ValidatableResponse responseUser = userClient.create(user);
-            accessToken = responseUser.extract().path("accessToken");
-            userToken = accessToken.substring(7);
-            orderClient.createOrder(userToken, OrderGenerator.orderWithValidIngredients());
-            ValidatableResponse responseOrder = orderClient.getOrder(userToken);
-            int statusCode = responseOrder.extract().statusCode();
-            boolean isCreated = responseOrder.extract().path("success");
-            assertEquals("Status code is incorrect", SC_OK, statusCode);
-            assertTrue("Order is not created", isCreated);
-
-        }
+    @Test
+    @DisplayName("Authorization user can get order list")
+    public void GetOrderListAuthUser() {
+        ValidatableResponse responseUser = userClient.create(user);
+        accessToken = responseUser.extract().path("accessToken");
+        userToken = accessToken.substring(7);
+        orderClient.createOrder(userToken, OrderGenerator.orderWithValidIngredients());
+        ValidatableResponse responseOrder = orderClient.getOrder(userToken);
+        int statusCode = responseOrder.extract().statusCode();
+        boolean isCreated = responseOrder.extract().path("success");
+        assertEquals("Status code is incorrect", SC_OK, statusCode);
+        assertTrue("Order is not created", isCreated);
+    }
 
     @Test
     @DisplayName("Non authorization user cannot get order list")
@@ -54,9 +53,6 @@ public class OrderListTest {
         String messageExpected = "You should be authorised";
         assertEquals("Status code is incorrect", SC_UNAUTHORIZED, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
-
-
-    }
+}
 

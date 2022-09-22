@@ -25,6 +25,7 @@ public class UserLoginTest {
     public void tearDown() {
         userClient.deleteUser(userToken);
     }
+
     @Test
     @DisplayName("User can login")
     public void userCanBeLoginTest() {
@@ -34,22 +35,20 @@ public class UserLoginTest {
         userToken = accessToken.substring(7);
         int statusCode = loginResponse.extract().statusCode();
         boolean isCreated = loginResponse.extract().path("success");
-
         assertEquals("Status code is incorrect", SC_OK, statusCode);
         assertTrue("User is not login", isCreated);
     }
-        @Test
-        @DisplayName("User is not login nonexistent user")
-        public void userIsNotLoginNonexistentUserTest() {
-            ValidatableResponse loginResponse = userClient.login(UserCredentials.from(UserGenerator.getNonexistentUser()));
-            userToken = "";
-            int statusCode = loginResponse.extract().statusCode();
-            String messageError = loginResponse.extract().path("message");
-            String messageExpected = "email or password are incorrect";
-            assertEquals("Status code is incorrect", SC_UNAUTHORIZED, statusCode);
-            assertEquals("Message is not true", messageExpected, messageError);
 
-        }
-
+    @Test
+    @DisplayName("User is not login nonexistent user")
+    public void userIsNotLoginNonexistentUserTest() {
+        ValidatableResponse loginResponse = userClient.login(UserCredentials.from(UserGenerator.getNonexistentUser()));
+        userToken = "";
+        int statusCode = loginResponse.extract().statusCode();
+        String messageError = loginResponse.extract().path("message");
+        String messageExpected = "email or password are incorrect";
+        assertEquals("Status code is incorrect", SC_UNAUTHORIZED, statusCode);
+        assertEquals("Message is not true", messageExpected, messageError);
     }
+}
 

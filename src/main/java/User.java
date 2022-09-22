@@ -1,7 +1,5 @@
 public class User {
 
-
-
     private String email;
     private String password;
     private String name;
@@ -11,6 +9,7 @@ public class User {
         this.password = password;
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
@@ -34,6 +33,4 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
@@ -8,6 +9,7 @@ public class OrderClient extends RestClient {
 
     private static final String GET_ORDER = "/api/orders";
 
+    @Step("Создание заказа")
     public ValidatableResponse createOrder(String accessToken, Order order) {
         return given()
                 .spec(getBaseSpec())
@@ -18,6 +20,7 @@ public class OrderClient extends RestClient {
                 .then();
     }
 
+    @Step("Получние заказов")
     public ValidatableResponse getOrder(String accessToken) {
         return given()
                 .spec(getBaseSpec())
@@ -25,7 +28,5 @@ public class OrderClient extends RestClient {
                 .when()
                 .get(GET_ORDER)
                 .then();
-
-
     }
 }

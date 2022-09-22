@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import io.restassured.http.Header;
 import io.restassured.response.ValidatableResponse;
 
@@ -11,6 +12,7 @@ public class UserClient extends RestClient {
     private static final String DELETE_PATH = "/api/auth/user";
     private static final String CHANGE_PATH= "/api/auth/user";
 
+    @Step("Создание пользователя")
     public ValidatableResponse create(User user) {
         return given()
                 .spec(getBaseSpec())
@@ -18,9 +20,9 @@ public class UserClient extends RestClient {
                 .when()
                 .post(USER_PATH)
                 .then();
-
     }
 
+    @Step("Логин пользователя")
     public ValidatableResponse login(UserCredentials credentials) {
         return given()
                 .spec(getBaseSpec())
@@ -28,9 +30,9 @@ public class UserClient extends RestClient {
                 .when()
                 .post(LOGIN_PATH)
                 .then();
-
     }
 
+    @Step("Изменение данных пользователя")
     public ValidatableResponse change(User user, String accessToken) {
         return given()
                 .spec(getBaseSpec())
@@ -40,6 +42,8 @@ public class UserClient extends RestClient {
                 .patch(CHANGE_PATH)
                 .then();
     }
+
+    @Step("Удаление пользователя")
     public ValidatableResponse deleteUser(String accessToken) {
         return given()
                 .spec(getBaseSpec())

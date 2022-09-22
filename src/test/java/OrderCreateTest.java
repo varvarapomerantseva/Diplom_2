@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class OrderCreateTest {
     private OrderClient orderClient;
-
     private User user;
     private UserClient userClient;
     private String userToken;
@@ -66,7 +65,6 @@ public class OrderCreateTest {
         String messageExpected = "Ingredient ids must be provided";
         assertEquals("Status code is incorrect", SC_BAD_REQUEST, statusCode);
         assertEquals("Message is not true", messageExpected, messageError);
-
     }
 
     @Test
@@ -78,8 +76,6 @@ public class OrderCreateTest {
         ValidatableResponse responseOrder = orderClient.createOrder(userToken, OrderGenerator.orderWithInvalidIngredients());
         int statusCode = responseOrder.extract().statusCode();
         assertEquals("Status code is incorrect", SC_INTERNAL_SERVER_ERROR, statusCode);
-
-
     }
 }
 
